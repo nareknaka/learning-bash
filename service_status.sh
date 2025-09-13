@@ -5,7 +5,7 @@
 # Practice enabling, disabling, starting, stopping, and checking its logs with journalctl.
 
 
-!/bin/bash
+#!/bin/bash
 
 while true; do
    echo "Service is running"
