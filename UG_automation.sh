@@ -8,7 +8,7 @@
 sudo groupadd devops
 for user in dev1 dev2 dev3; do
     sudo useradd -m -g devops -s /bin/bash "$user"
-    echo "Welcome to the system, $user!" | sudo tee /home/"$user"/.bashrc
+    echo 'echo "Welcome to the system, '"$user"'!"' | sudo tee /home/"$user"/.bashrc
     sudo chmod 700 /home/"$user"
 done
 
