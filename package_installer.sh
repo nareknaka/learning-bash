@@ -9,5 +9,7 @@ for pkg in git curl vim; do
         echo "$pkg is installed"
     else
         echo "$pkg is NOT installed"
+        sudo apt-get update
+        sudo apt-get install -y "$pkg"
     fi
 done
