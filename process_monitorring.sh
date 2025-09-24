@@ -21,19 +21,20 @@ fi
 PID=$(pgrep "$PROCESS_NAME" | head -1) # head -1 to get first PID if multiple instances
 
 # Get usage statistics
-CPU_USAGE=$(ps -p "$PID" -o %cpu=) #ps is process status, -p for pid, -o for output format, %cpu to show only cpu usage = without header
-MEMORY_USAGE=$(ps -p "$PID" -o %mem=)
+CPU_USAGE=$(ps -p "$PID" -o %cpu= | awk '{print int($1+0.5)}') #ps is process status, -p for pid, -o for output format, %cpu to show only cpu usage = without header
+MEMORY_USAGE=$(ps -p "$PID" -o %mem= | awk '{print int($1+0.5)}') #awk '{print int($1+0.5)}' to round to nearest integer
 
-
-
+# Set default values if empty
+CPU_USAGE=${CPU_USAGE:-0}
+MEMORY_USAGE=${MEMORY_USAGE:-0}
 
 # Check thresholds and log if exceeded
 if [ "$CPU_USAGE" -gt "$CPU_THRESHOLD" ]; then
     echo "$(date): WARNING - $PROCESS_NAME CPU usage: ${CPU_USAGE}% (exceeds ${CPU_THRESHOLD}%)" >> "$LOG_FILE"
 fi
 
-if [ "$MEMORY_USAGE" -gt "$MEMORY_THRESHOLD" ]; then
-    echo "$(date): WARNING - $PROCESS_NAME Memory usage: ${MEMORY_USAGE}% (exceeds ${MEMORY_THRESHOLD}%)" >> "$LOG_FILE"
+if [ "$MEMORY_USAGE" -gt "$MEM_THRESHOLD" ]; then
+    echo "$(date): WARNING - $PROCESS_NAME Memory usage: ${MEMORY_USAGE}% (exceeds ${MEM_THRESHOLD}%)" >> "$LOG_FILE"
 fi
 
 # Display current status
