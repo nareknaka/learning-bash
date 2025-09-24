@@ -10,3 +10,9 @@ MEM_THRESHOLD=70
 LOG_FILE="/var/log/process_monitor.log"
 sudo touch $LOG_FILE
 sudo chmod 666 $LOG_FILE
+# Check if process is running
+#! if process not found
+if ! pgrep "$PROCESS_NAME" > /dev/null; then #/dev/null to not show output
+    echo "$(date): Process $PROCESS_NAME not found" >> "$LOG_FILE"
+    exit 1
+fi
