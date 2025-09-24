@@ -18,4 +18,8 @@ if ! pgrep "$PROCESS_NAME" > /dev/null; then #/dev/null to not show output
 fi
 
 # Get PID
-PID=$(pgrep "$PROCESS_NAME" | head -1)
+PID=$(pgrep "$PROCESS_NAME" | head -1) # head -1 to get first PID if multiple instances
+
+# Get usage statistics
+CPU_USAGE=$(ps -p "$PID" -o %cpu=) #ps is process status, -p for pid, -o for output format, %cpu to show only cpu usage = without header
+MEMORY_USAGE=$(ps -p "$PID" -o %mem=)
