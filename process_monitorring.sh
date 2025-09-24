@@ -23,3 +23,18 @@ PID=$(pgrep "$PROCESS_NAME" | head -1) # head -1 to get first PID if multiple in
 # Get usage statistics
 CPU_USAGE=$(ps -p "$PID" -o %cpu=) #ps is process status, -p for pid, -o for output format, %cpu to show only cpu usage = without header
 MEMORY_USAGE=$(ps -p "$PID" -o %mem=)
+
+
+
+
+# Check thresholds and log if exceeded
+if [ "$CPU_USAGE" -gt "$CPU_THRESHOLD" ]; then
+    echo "$(date): WARNING - $PROCESS_NAME CPU usage: ${CPU_USAGE}% (exceeds ${CPU_THRESHOLD}%)" >> "$LOG_FILE"
+fi
+
+if [ "$MEMORY_USAGE" -gt "$MEMORY_THRESHOLD" ]; then
+    echo "$(date): WARNING - $PROCESS_NAME Memory usage: ${MEMORY_USAGE}% (exceeds ${MEMORY_THRESHOLD}%)" >> "$LOG_FILE"
+fi
+
+# Display current status
+echo "$(date): $PROCESS_NAME - CPU: ${CPU_USAGE}%, Memory: ${MEMORY_USAGE}%"
