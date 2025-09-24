@@ -5,7 +5,7 @@
 # If usage exceeds a threshold (say 70%), log the event with timestamp into /var/log/custom_monitor.log.
 
 PROCESS_NAME="nginx"    
-CPU_THRESHOLD=70
+CPU_THRESHOLD=70 
 MEM_THRESHOLD=70
 LOG_FILE="/var/log/process_monitor.log"
 sudo touch $LOG_FILE
@@ -16,3 +16,10 @@ if ! pgrep "$PROCESS_NAME" > /dev/null; then #/dev/null to not show output
     echo "$(date): Process $PROCESS_NAME not found" >> "$LOG_FILE"
     exit 1
 fi
+
+# Get PID
+PID=$(pgrep "$PROCESS_NAME" | head -1) # head -1 to get first PID if multiple instances
+
+# Get usage statistics
+CPU_USAGE=$(ps -p "$PID" -o %cpu=) #ps is process status, -p for pid, -o for output format, %cpu to show only cpu usage = without header
+MEMORY_USAGE=$(ps -p "$PID" -o %mem=)
