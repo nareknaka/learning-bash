@@ -8,3 +8,5 @@ PROCESS_NAME="nginx"
 CPU_THRESHOLD=70
 MEM_THRESHOLD=70
 LOG_FILE="/var/log/process_monitor.log"
+sudo touch $LOG_FILE
+sudo chmod 666 $LOG_FILE
