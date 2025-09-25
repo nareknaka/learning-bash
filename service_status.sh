@@ -1,5 +1,5 @@
 #!/bin/bash
-# Custom Service with systemd
+# Custom Service with systemd .
 
 # Create a simple shell script (e.g., one that prints “Service Running” every 10 seconds).
 # Register it as a systemd service.
